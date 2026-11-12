@@ -23,12 +23,12 @@ class WordViewModel(
             initialValue = emptyList(),
         )
 
-    fun addWord(term: String, meaning: String) {
-        if (term.isBlank() || meaning.isBlank()) return
+    fun addWord(word: String, meaning: String) {
+        if (word.isBlank() || meaning.isBlank()) return
         viewModelScope.launch {
             repository.add(
                 Word(
-                    term = term.trim(),
+                    word = word.trim(),
                     meaning = meaning.trim(),
                 ),
             )
