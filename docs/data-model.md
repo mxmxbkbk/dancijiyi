@@ -161,10 +161,10 @@ abstract class AppDatabase : RoomDatabase() {
 ## 6. 数据访问链路
 
 ```text
-[首页/详情/导入/复习 UI]  （后续实现）
+[首页/详情/导入/复习 UI]  （骨架已实现，真实数据待接入）
             │
             ▼
-      WordViewModel        （现有骨架，仅作数据桥接）
+  各页面 ViewModel（列表 / 详情 / 导入 / 复习，协程入口已预留）
             │
             ▼
       WordRepository       （数据访问编排）
@@ -259,4 +259,4 @@ Word(
 | 复习测试 | `observeDue()`、`updateReviewState()`、`memoryStage/reviewAt/mastered` |
 | 桌面小组件 | 只读的到期数量与今日单词（后续通过 ContentProvider / DataStore） |
 
-本期代码只覆盖实体与 Room 基础结构；页面、导入解析、复习调度算法均不在本期实现。
+本期数据层已覆盖实体与 Room 基础结构；页面 UI 骨架见 [需求文档](requirements.md)，真实数据加载、导入解析与复习调度算法仍未接入。

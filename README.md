@@ -9,13 +9,14 @@
 
 ## 功能清单
 
-### 已搭建（v0.1 骨架）
+### 已搭建（v0.3 骨架）
 
-- [x] `app` 主应用模块：单 Activity + Material 3 主题 + 空白占位首页
+- [x] 单 Activity + Navigation 导航，首页 / 详情 / 导入 / 复习四页可互相跳转
+- [x] 四个页面 UI 骨架：Material 3、ViewBinding、空状态、加载状态
+- [x] 每页独立 ViewModel，协程调用入口与 `ScreenState` 已预留
 - [x] `widget` P1 桌面小组件模块：示例单词卡片（AppWidgetProvider + RemoteViews）
 - [x] Word 数据实体：单词、释义、添加时间、复习时间、记忆阶段、是否掌握
 - [x] Room 实体、`WordDao`、`AppDatabase` 与仓库层
-- [x] Repository + ViewModel + Coroutines/Flow 的 MVVM 数据链路
 - [x] Room schema 导出：`app/schemas/com.dancijiyi.data.AppDatabase/1.json`
 - [x] 需求文档、数据模型说明与页面结构注释
 
@@ -27,6 +28,17 @@
 - [ ] 学习统计：连续打卡、掌握度、复习热力图
 - [ ] 桌面小组件：展示真实「今日单词」与待复习数量，支持点击跳转
 - [ ] 数据能力：导入/导出、备份恢复、深色模式与无障碍适配
+
+## 页面导航
+
+```text
+首页 · 单词列表（startDestination）
+├── 点击单词 ──────> 单词详情 ──> 复习测试
+├── 空状态 / 顶栏 ─> 导入词库
+└── 空状态 / 顶栏 ─> 复习测试
+```
+
+四个页面均为空 UI 骨架：列表空状态、详情占位信息、导入表单、复习卡片；加载状态与空状态组件已封装，业务数据暂未接入。
 
 ## 数据模型（Word）
 
@@ -48,8 +60,8 @@
 | --- | --- |
 | 语言 | Kotlin 2.2.10 |
 | 构建 | Gradle 9.6.0 + Android Gradle Plugin 9.5.1（Kotlin DSL） |
-| UI | Android View + Material 3 + ViewBinding，单 Activity 架构 |
-| Jetpack | ViewModel、Lifecycle、Room、KSP、AppCompat |
+| UI | Android View + Material 3 + ViewBinding + Navigation，单 Activity 架构 |
+| Jetpack | ViewModel、Lifecycle、Navigation、Room、KSP、AppCompat |
 | 异步 | Kotlin Coroutines + Flow / StateFlow |
 | 持久化 | Room 2.7.2（`room-runtime` / `room-ktx` / `room-compiler`） |
 | 桌面小组件 | 原生 AppWidgetProvider + RemoteViews（`widget` 模块） |
@@ -63,10 +75,18 @@
 dancijiyi/
 ├── app/                         # 单词记忆主 App
 │   ├── src/main/java/com/dancijiyi/
-│   │   ├── MainActivity.kt      # 空白占位首页
+│   │   ├── MainActivity.kt      # 单 Activity + NavHost + 统一 AppBar
 │   │   ├── data/                # Room 实体、DAO、数据库、Repository
-│   │   └── ui/                  # WordViewModel
-│   ├── src/main/res/            # 主题、布局、图标
+│   │   └── ui/
+│   │       ├── wordlist/        # 单词列表页 + ViewModel
+│   │       ├── detail/          # 单词详情页 + ViewModel
+│   │       ├── importer/        # 词库导入页 + ViewModel
+│   │       ├── review/          # 复习测试页 + ViewModel
+│   │       └── common/          # ScreenState 等页面公共状态
+│   ├── src/main/res/
+│   │   ├── navigation/          # nav_graph.xml
+│   │   ├── layout/              # 4 个页面、空/加载状态、列表项
+│   │   └── values/              # 主题、字符串、颜色
 │   └── schemas/                 # Room schema 导出
 ├── widget/                      # P1 桌面小组件伴生模块（Android Library）
 │   └── src/main/
@@ -104,10 +124,11 @@ gradlew.bat :app:assembleDebug
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-启动后进入「单词记忆」占位首页。添加桌面小组件：长按桌面空白处 → 小组件 → 找到「单词记忆 · 今日单词」。
+启动后进入「单词记忆」首页，可通过顶栏或空状态按钮进入导入/复习页，通过「预览详情页」进入详情骨架。添加桌面小组件：长按桌面空白处 → 小组件 → 找到「单词记忆 · 今日单词」。
 
 ## 仓库
 
 - GitHub：<https://github.com/mxmxbkbk/dancijiyi>
 - 初始提交：`feat: 初始化项目仓库，搭建app与widget模块骨架`
 - 数据模型提交：`feat: 设计单词数据模型，搭建Room数据库基础结构，补充需求文档`
+- 导航骨架提交：`feat: 搭建主App导航框架，完成4个基础页面UI骨架`

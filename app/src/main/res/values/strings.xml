@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">单词记忆</string>
-    <string name="home_placeholder">项目骨架已就绪</string>
-    <string name="home_subtitle">下一步：添加单词，开始间隔复习</string>
+
+    <!-- 页面标题 / 菜单 -->
+    <string name="title_word_list">单词记忆</string>
+    <string name="title_word_detail">单词详情</string>
+    <string name="title_import">导入词库</string>
+    <string name="title_review">复习测试</string>
+    <string name="menu_import">导入</string>
+    <string name="menu_review">复习</string>
+
+    <!-- 首页 -->
+    <string name="list_summary">0 个单词 · 0 个待复习</string>
+    <string name="filter_all">全部</string>
+    <string name="filter_due">待复习</string>
+    <string name="filter_mastered">已掌握</string>
+    <string name="fab_add_word">添加单词</string>
+    <string name="empty_list_title">还没有单词</string>
+    <string name="empty_list_message">导入词库，或先预览页面骨架。</string>
+    <string name="action_import">导入词库</string>
+    <string name="action_preview_detail">预览详情页</string>
+    <string name="action_back_to_list">返回列表</string>
+    <string name="action_back_to_home">返回首页</string>
+
+    <!-- 通用状态 -->
+    <string name="state_loading">加载中…</string>
+    <string name="empty_default_title">暂无内容</string>
+    <string name="empty_default_message">这里还没有内容</string>
+    <string name="content_desc_empty_icon">空状态图标</string>
+
+    <!-- 单词详情 -->
+    <string name="detail_word_placeholder">单词</string>
+    <string name="detail_meaning_placeholder">释义会显示在这里</string>
+    <string name="detail_stage_new">新词</string>
+    <string name="detail_label_added">添加时间</string>
+    <string name="detail_label_review">下次复习</string>
+    <string name="detail_label_stage">记忆阶段</string>
+    <string name="detail_label_mastered">掌握状态</string>
+    <string name="detail_value_placeholder">—</string>
+    <string name="detail_action_review">开始复习</string>
+    <string name="detail_action_master">标记掌握</string>
+    <string name="empty_detail_title">暂无单词</string>
+    <string name="empty_detail_message">从列表选择一个单词查看详情。</string>
+
+    <!-- 导入词库 -->
+    <string name="import_format_title">导入格式</string>
+    <string name="import_format_message">每行一条「单词,释义」，支持 CSV / TXT，UTF-8 优先。</string>
+    <string name="import_input_hint">例如：abandon,v. 放弃；抛弃</string>
+    <string name="import_select_file">选择文件</string>
+    <string name="import_action">开始导入</string>
+    <string name="import_preview_title">解析预览</string>
+    <string name="import_preview_empty">解析结果会显示在这里</string>
+    <string name="import_file_todo">文件选择将在后续版本实现</string>
+    <string name="empty_import_title">暂无导入内容</string>
+    <string name="empty_import_message">粘贴文本或选择文件后开始解析。</string>
+
+    <!-- 复习测试 -->
+    <string name="review_progress">0 / 0</string>
+    <string name="review_progress_title">本轮复习</string>
+    <string name="review_word_placeholder">单词将显示在这里</string>
+    <string name="review_meaning_placeholder">释义将显示在这里</string>
+    <string name="review_reveal">显示释义</string>
+    <string name="review_rating_unknown">不认识</string>
+    <string name="review_rating_fuzzy">模糊</string>
+    <string name="review_rating_known">认识</string>
+    <string name="review_hint">自评后会更新记忆阶段与下次复习时间</string>
+    <string name="empty_review_title">暂无待复习单词</string>
+    <string name="empty_review_message">先添加或导入单词，到期后再来复习。</string>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/wordListFragment">
+
+    <fragment
+        android:id="@+id/wordListFragment"
+        android:name="com.dancijiyi.ui.wordlist.WordListFragment"
+        android:label="@string/title_word_list">
+
+        <action
+            android:id="@+id/action_wordList_to_wordDetail"
+            app:destination="@id/wordDetailFragment" />
+
+        <action
+            android:id="@+id/action_wordList_to_import"
+            app:destination="@id/importFragment" />
+
+        <action
+            android:id="@+id/action_wordList_to_review"
+            app:destination="@id/reviewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wordDetailFragment"
+        android:name="com.dancijiyi.ui.detail.WordDetailFragment"
+        android:label="@string/title_word_detail">
+
+        <argument
+            android:name="wordId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_wordDetail_to_review"
+            app:destination="@id/reviewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/importFragment"
+        android:name="com.dancijiyi.ui.importer.ImportFragment"
+        android:label="@string/title_import" />
+
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.dancijiyi.ui.review.ReviewFragment"
+        android:label="@string/title_review" />
+
+</navigation>
