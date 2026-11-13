@@ -161,7 +161,7 @@ abstract class AppDatabase : RoomDatabase() {
 ## 6. 数据访问链路
 
 ```text
-[首页/详情/导入/复习 UI]  （骨架已实现，真实数据待接入）
+[首页/详情]（已接入 Room）
             │
             ▼
   各页面 ViewModel（列表 / 详情 / 导入 / 复习，协程入口已预留）
@@ -253,10 +253,10 @@ Word(
 
 | 页面 | 使用的方法/字段 |
 | --- | --- |
-| 首页 · 单词列表 | `observeAll()`、`observeTotalCount()`、`observeDueCount()`、`word/meaning/memoryStage/reviewAt` |
-| 单词详情 | `observeById()`、`update()`、`deleteById()`、全部字段 |
-| 导入词库 | `insertAll()`、`word` 唯一索引、返回的 rowId |
-| 复习测试 | `observeDue()`、`updateReviewState()`、`memoryStage/reviewAt/mastered` |
+| 首页 · 单词列表 | `observeAll()`、`insert()`；数量与筛选在 ViewModel 内计算 |
+| 单词详情 | `observeById()`、`update()`、`delete()`；全部字段 |
+| 导入词库 | 预留 `insertAll()`、`word` 唯一索引、返回的 rowId（下一阶段） |
+| 复习测试 | 预留 `observeDue()`、`updateReviewState()`、`memoryStage/reviewAt/mastered` |
 | 桌面小组件 | 只读的到期数量与今日单词（后续通过 ContentProvider / DataStore） |
 
-本期数据层已覆盖实体与 Room 基础结构；页面 UI 骨架见 [需求文档](requirements.md)，真实数据加载、导入解析与复习调度算法仍未接入。
+当前列表与详情已接入 Room 并完成基础 CRUD；导入解析、复习调度与小组件真实数据仍未接入。

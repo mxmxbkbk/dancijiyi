@@ -32,9 +32,6 @@
             android:defaultValue="-1L"
             app:argType="long" />
 
-        <action
-            android:id="@+id/action_wordDetail_to_review"
-            app:destination="@id/reviewFragment" />
     </fragment>
 
     <fragment

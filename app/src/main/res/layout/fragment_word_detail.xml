@@ -42,7 +42,7 @@
                     android:paddingTop="6dp"
                     android:paddingEnd="12dp"
                     android:paddingBottom="6dp"
-                    android:text="@string/detail_stage_new"
+                    android:text="@string/stage_new"
                     android:textAppearance="?attr/textAppearanceLabelMedium"
                     android:textColor="@color/indigo_900" />
 
@@ -161,21 +161,27 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/detail_review_button"
+                android:id="@+id/detail_edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="@string/detail_action_review" />
+                android:text="@string/action_edit_word" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/detail_master_button"
+                android:id="@+id/detail_delete_button"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:alpha="0.5"
-                android:enabled="false"
-                android:text="@string/detail_action_master" />
+                android:text="@string/action_delete_word" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detail_master_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/action_mark_mastered" />
 
         </LinearLayout>
 

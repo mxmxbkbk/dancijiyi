@@ -11,10 +11,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dancijiyi.R
+import com.dancijiyi.data.AppContainer
+import com.dancijiyi.data.Word
 import com.dancijiyi.databinding.FragmentWordDetailBinding
-import com.dancijiyi.ui.common.ScreenState
+import com.dancijiyi.ui.common.AppViewModelFactory
+import com.dancijiyi.ui.common.WordEditorDialog
+import com.dancijiyi.ui.common.formatTimestamp
+import com.dancijiyi.ui.common.stageLabel
 import com.dancijiyi.ui.wordlist.WordListFragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
@@ -22,7 +29,9 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
     private var _binding: FragmentWordDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: WordDetailViewModel by viewModels()
+    private val viewModel: WordDetailViewModel by viewModels {
+        AppViewModelFactory(AppContainer.wordRepository(requireContext()))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,12 +42,33 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
 
         setupActions()
         setupEmptyState()
-        observeUiState()
+        observeState()
+        observeEvents()
     }
 
     private fun setupActions() {
-        binding.detailReviewButton.setOnClickListener {
-            findNavController().navigate(R.id.action_wordDetail_to_review)
+        binding.detailEditButton.setOnClickListener {
+            val word = viewModel.uiState.value.word ?: return@setOnClickListener
+            WordEditorDialog.show(requireContext(), layoutInflater, word) { newWord, newMeaning ->
+                viewModel.updateWord(word, newWord, newMeaning)
+            }
+        }
+
+        binding.detailDeleteButton.setOnClickListener {
+            val word = viewModel.uiState.value.word ?: return@setOnClickListener
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.dialog_delete_word)
+                .setMessage(getString(R.string.dialog_delete_message, word.word))
+                .setPositiveButton(R.string.action_delete) { _, _ ->
+                    viewModel.deleteWord(word)
+                }
+                .setNegativeButton(R.string.action_cancel, null)
+                .show()
+        }
+
+        binding.detailMasterButton.setOnClickListener {
+            val word = viewModel.uiState.value.word ?: return@setOnClickListener
+            viewModel.setMastered(word, !word.mastered)
         }
     }
 
@@ -54,7 +84,7 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
         emptyState.findViewById<MaterialButton>(R.id.empty_secondary_button).isVisible = false
     }
 
-    private fun observeUiState() {
+    private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect(::render)
@@ -62,12 +92,60 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
         }
     }
 
-    private fun render(state: ScreenState) {
-        binding.root.findViewById<View>(R.id.loading_state).isVisible =
-            state == ScreenState.LOADING
+    private fun observeEvents() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        WordDetailEvent.Deleted -> findNavController().navigateUp()
+                        is WordDetailEvent.Error -> Snackbar.make(
+                            binding.root,
+                            event.message,
+                            Snackbar.LENGTH_LONG,
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun render(state: WordDetailUiState) {
+        binding.root.findViewById<View>(R.id.loading_state).isVisible = state.isLoading
         binding.root.findViewById<View>(R.id.empty_state).isVisible =
-            state == ScreenState.EMPTY
-        binding.detailContent.isVisible = state == ScreenState.CONTENT
+            !state.isLoading && state.word == null
+        binding.detailContent.isVisible = !state.isLoading && state.word != null
+
+        state.word?.let(::bindWord)
+
+        state.errorMessage?.let { message ->
+            Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+            viewModel.consumeError()
+        }
+    }
+
+    private fun bindWord(word: Word) {
+        with(binding) {
+            detailWord.text = word.word
+            detailMeaning.text = word.meaning
+            detailStage.text = stageLabel(requireContext(), word.memoryStage)
+            detailAddedValue.text = formatTimestamp(word.addedAt)
+            detailReviewValue.text = formatTimestamp(word.reviewAt)
+            detailStageValue.text = stageLabel(requireContext(), word.memoryStage)
+            detailMasteredValue.setText(
+                if (word.mastered) {
+                    R.string.detail_mastered_yes
+                } else {
+                    R.string.detail_mastered_no
+                },
+            )
+            detailMasterButton.setText(
+                if (word.mastered) {
+                    R.string.action_unmark_mastered
+                } else {
+                    R.string.action_mark_mastered
+                },
+            )
+        }
     }
 
     override fun onDestroyView() {
