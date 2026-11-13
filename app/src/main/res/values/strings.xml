@@ -75,17 +75,34 @@
     <string name="error_word_required">请输入单词</string>
     <string name="error_meaning_required">请输入释义</string>
 
-    <!-- 导入词库（本期仅保留页面骨架） -->
+    <!-- 导入词库 -->
     <string name="import_format_title">导入格式</string>
-    <string name="import_format_message">每行一条「单词,释义」，支持 CSV / TXT，UTF-8 优先。</string>
-    <string name="import_input_hint">例如：abandon,v. 放弃；抛弃</string>
+    <string name="import_format_message">每行一条「单词,释义」，支持 CSV / TXT，UTF-8 优先；重复单词会自动跳过。</string>
+    <string name="import_pick_title">选择词库文件</string>
+    <string name="import_pick_hint">支持 .txt / .csv，文件不超过 5 MB</string>
     <string name="import_select_file">选择文件</string>
+    <string name="import_file_none">未选择文件</string>
+    <string name="import_file_selected">已选择：%1$s</string>
     <string name="import_action">开始导入</string>
     <string name="import_preview_title">解析预览</string>
-    <string name="import_preview_empty">解析结果会显示在这里</string>
-    <string name="import_file_todo">文件选择将在后续版本实现</string>
+    <string name="import_preview_empty">选择文件后会显示解析结果</string>
+    <string name="import_preview_summary">有效 %1$d 条 · 重复 %2$d 条 · 错误 %3$d 条</string>
+    <string name="import_preview_no_valid">没有可导入的有效词条</string>
+    <string name="import_result_title">导入完成</string>
+    <string name="import_result_failure_title">导入失败</string>
+    <string name="import_result_message">成功 %1$d 条，跳过重复 %2$d 条，失败 %3$d 条。</string>
+    <string name="action_ok">知道了</string>
+
+    <!-- 导入权限 -->
+    <string name="import_permission_title">需要文件读取权限</string>
+    <string name="import_permission_message">未授予存储读取权限，无法直接读取本地文件。你可以去设置开启，或改用系统文件选择器（无需权限）。</string>
+    <string name="import_permission_rationale">读取 txt/csv 词库需要存储读取权限。</string>
+    <string name="import_permission_settings">去设置</string>
+    <string name="import_permission_use_picker">使用系统选择器</string>
+    <string name="import_permission_continue">继续</string>
+
     <string name="empty_import_title">暂无导入内容</string>
-    <string name="empty_import_message">粘贴文本或选择文件后开始解析。</string>
+    <string name="empty_import_message">选择文件后开始解析。</string>
 
     <!-- 复习测试（本期仅保留页面骨架） -->
     <string name="review_progress">0 / 0</string>

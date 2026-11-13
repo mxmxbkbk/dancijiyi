@@ -25,7 +25,10 @@ class WordListFragment : Fragment(R.layout.fragment_word_list) {
     private val binding get() = _binding!!
 
     private val viewModel: WordListViewModel by viewModels {
-        AppViewModelFactory(AppContainer.wordRepository(requireContext()))
+        AppViewModelFactory(
+            repository = AppContainer.wordRepository(requireContext()),
+            appContext = requireContext().applicationContext,
+        )
     }
 
     private lateinit var wordAdapter: WordAdapter

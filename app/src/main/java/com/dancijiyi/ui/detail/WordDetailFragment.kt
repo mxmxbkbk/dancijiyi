@@ -30,7 +30,10 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
     private val binding get() = _binding!!
 
     private val viewModel: WordDetailViewModel by viewModels {
-        AppViewModelFactory(AppContainer.wordRepository(requireContext()))
+        AppViewModelFactory(
+            repository = AppContainer.wordRepository(requireContext()),
+            appContext = requireContext().applicationContext,
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
