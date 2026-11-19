@@ -11,6 +11,8 @@ class WordRepository(private val wordDao: WordDao) {
 
     fun observeAll(): Flow<List<Word>> = wordDao.observeAll()
 
+    suspend fun getAll(): List<Word> = wordDao.getAll()
+
     fun observeById(id: Long): Flow<Word?> = wordDao.observeById(id)
 
     fun observeDue(now: Long = System.currentTimeMillis()): Flow<List<Word>> =

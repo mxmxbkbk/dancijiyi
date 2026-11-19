@@ -256,7 +256,8 @@ Word(
 | 首页 · 单词列表 | `observeAll()`、`insert()`；数量与筛选在 ViewModel 内计算 |
 | 单词详情 | `observeById()`、`update()`、`delete()`；全部字段 |
 | 导入词库 | `insertAll()`、`word` 唯一索引、返回的 rowId；支持批量冲突统计 |
+| 导出词库 | `getAll()` 一次性读取全部单词，按 `word COLLATE NOCASE` 排序 |
 | 复习测试 | 预留 `observeDue()`、`updateReviewState()`、`memoryStage/reviewAt/mastered` |
 | 桌面小组件 | 只读的到期数量与今日单词（后续通过 ContentProvider / DataStore） |
 
-当前列表、详情与词库导入已接入 Room 并完成基础业务；复习调度与小组件真实数据仍未接入。
+当前列表、详情、词库导入与导出已接入 Room 并完成基础业务；复习调度与小组件真实数据仍未接入。

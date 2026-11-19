@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dancijiyi.data.WordRepository
+import com.dancijiyi.data.exporter.WordExportManager
 import com.dancijiyi.data.importer.LocalFileReader
 import com.dancijiyi.ui.detail.WordDetailViewModel
+import com.dancijiyi.ui.exporter.ExportViewModel
 import com.dancijiyi.ui.importer.ImportViewModel
 import com.dancijiyi.ui.wordlist.WordListViewModel
 
@@ -29,6 +31,12 @@ class AppViewModelFactory(
             ImportViewModel(
                 repository = repository,
                 fileReader = LocalFileReader(appContext.contentResolver),
+            ) as T
+
+        modelClass.isAssignableFrom(ExportViewModel::class.java) ->
+            ExportViewModel(
+                repository = repository,
+                exportManager = WordExportManager(appContext),
             ) as T
 
         else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

@@ -15,6 +15,10 @@ interface WordDao {
     @Query("SELECT * FROM words ORDER BY addedAt DESC, id DESC")
     fun observeAll(): Flow<List<Word>>
 
+    /** 导出用：一次性取出全部单词，按单词名称排序。 */
+    @Query("SELECT * FROM words ORDER BY word COLLATE NOCASE ASC, id ASC")
+    suspend fun getAll(): List<Word>
+
     /** 单词详情；不存在时发射 null。 */
     @Query("SELECT * FROM words WHERE id = :id LIMIT 1")
     fun observeById(id: Long): Flow<Word?>

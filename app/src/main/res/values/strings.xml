@@ -27,6 +27,21 @@
     <string name="action_back_to_list">返回列表</string>
     <string name="action_back_to_home">返回首页</string>
 
+    <!-- 导出词库 -->
+    <string name="export_action">导出</string>
+    <string name="export_in_progress">导出中…</string>
+    <string name="export_format_title">导出词库</string>
+    <string name="export_format_csv">CSV 文件</string>
+    <string name="export_format_txt">TXT 文件</string>
+    <string name="export_success_title">导出完成</string>
+    <string name="export_success_message">文件已保存到：\n%1$s</string>
+    <string name="export_failure_title">导出失败</string>
+    <string name="export_permission_title">需要存储写入权限</string>
+    <string name="export_permission_message">未授予写入下载目录的权限，无法导出文件。请到系统设置开启权限后重试。</string>
+    <string name="export_permission_rationale">导出词库需要写入下载目录的权限。</string>
+    <string name="export_permission_settings">去设置</string>
+    <string name="export_permission_continue">继续</string>
+
     <!-- 通用状态 -->
     <string name="state_loading">加载中…</string>
     <string name="empty_default_title">暂无内容</string>
